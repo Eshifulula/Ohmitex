@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" width="160" height="48">
+  <style>
+    text {
+      font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+      font-weight: 900;
+      font-size: 38px;
+      fill: #0066B3;
+      letter-spacing: 1.5px;
+    }
+  </style>
+  <text x="4" y="40">OMRON</text>
+</svg>

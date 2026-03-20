@@ -1,0 +1,6 @@
+PLACEHOLDER: honeywell.png
+===========================
+Partner: Honeywell
+Recommended Size: 150x100 pixels
+Format: PNG with transparency
+Replace this file with actual logo (delete this .txt file after)

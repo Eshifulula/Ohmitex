@@ -1,0 +1,70 @@
+{
+    "name": "Ohmitex Smart Controls",
+    "short_name": "Ohmitex",
+    "description": "Industrial Automation & Building Management Solutions",
+    "theme_color": "#0D1C33",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "start_url": "/",
+    "id": "/",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable any"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Get a Quote",
+            "short_name": "Quote",
+            "description": "Request a custom automation quote",
+            "url": "/contact?action=quote",
+            "icons": [
+                {
+                    "src": "/icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Our Services",
+            "short_name": "Services",
+            "description": "View our automation services",
+            "url": "/services",
+            "icons": [
+                {
+                    "src": "/icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Projects Portfolio",
+            "short_name": "Projects",
+            "description": "Browse our completed projects",
+            "url": "/projects",
+            "icons": [
+                {
+                    "src": "/icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ],
+    "categories": [
+        "business",
+        "productivity"
+    ],
+    "lang": "en",
+    "dir": "ltr"
+}

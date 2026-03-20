@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* Primary Navy #0D1C33 */
+        --background: 0 0% 100%;
+        --foreground: 210 59% 13%;
+        --card: 0 0% 100%;
+        --card-foreground: 210 59% 13%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 210 59% 13%;
+        --primary: 210 59% 13%;
+        --primary-foreground: 0 0% 100%;
+        /* Vibrant Green #6EB43F */
+        --secondary: 96 48% 48%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215.4 16.3% 46.9%;
+        /* Vibrant Green accent */
+        --accent: 96 48% 48%;
+        --accent-foreground: 210 59% 13%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
+        --ring: 96 48% 48%;
+        --radius: 0.5rem;
+        --chart-1: 210 59% 13%;
+        --chart-2: 96 48% 48%;
+        --chart-3: 180 68% 6%;
+        --chart-4: 173 58% 39%;
+        --chart-5: 197 37% 24%;
+    }
+
+    .dark {
+        /* Deep Teal #051A1A background for dark mode */
+        --background: 180 68% 6%;
+        --foreground: 0 0% 98%;
+        --card: 180 68% 6%;
+        --card-foreground: 0 0% 98%;
+        --popover: 180 68% 6%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 96 48% 48%;
+        --primary-foreground: 180 68% 6%;
+        --secondary: 210 59% 13%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 217.2 32.6% 17.5%;
+        --muted-foreground: 215 20.2% 65.1%;
+        --accent: 96 48% 48%;
+        --accent-foreground: 180 68% 6%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 217.2 32.6% 17.5%;
+        --input: 217.2 32.6% 17.5%;
+        --ring: 96 48% 48%;
+        --chart-1: 96 48% 48%;
+        --chart-2: 210 59% 13%;
+        --chart-3: 180 68% 6%;
+        --chart-4: 160 60% 45%;
+        --chart-5: 30 80% 55%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee 30s linear infinite;
+    will-change: transform;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}

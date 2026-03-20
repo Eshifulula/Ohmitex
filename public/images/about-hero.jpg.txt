@@ -1,0 +1,14 @@
+PLACEHOLDER: about-hero.jpg
+============================
+Description: Hero image for About Us page - "Who We Are" section
+Recommended Size: 800x450 pixels (16:9 aspect ratio, displayed at aspect-video)
+Format: JPG or WebP
+Usage: About page - displays next to company description
+
+Suggested Content:
+  - Team photo
+  - Office building exterior
+  - Engineers working on automation equipment
+  - Control panel installation photo
+
+Replace this file with actual about-hero.jpg (delete this .txt file after)
