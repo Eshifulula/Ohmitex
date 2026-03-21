@@ -76,21 +76,21 @@ async function main() {
 
     // 3. Clients
     const clients = [
-        { name: 'Air Design Ltd' },
-        { name: 'AGC Tenwek Hospital' },
-        { name: 'Gertrude\'s Hospital' },
-        { name: 'Sarit Center' },
-        { name: 'Aga Khan University Hospital' },
-        { name: 'KUTTRH' },
-        { name: 'Plumbing System Ltd' },
-        { name: 'Snowpeak Refrigeration & Contractors Ltd' },
-        { name: 'Criserve Engineering Ltd' },
+        { name: 'Air Design Ltd', logoUrl: '/images/clients/air-design.jpg' },
+        { name: 'AGC Tenwek Hospital', logoUrl: '/images/clients/tenwek.jpg' },
+        { name: 'Gertrude\'s Hospital', logoUrl: '/images/clients/gertrude.png' },
+        { name: 'Sarit Center', logoUrl: '/images/clients/sarit.png' },
+        { name: 'Aga Khan University Hospital', logoUrl: '/images/clients/aga-khan.png' },
+        { name: 'KUTTRH', logoUrl: '/images/clients/kuttrh.png' },
+        { name: 'Plumbing System Ltd', logoUrl: '/images/clients/plumbing-systems.jpg' },
+        { name: 'Snowpeak Refrigeration & Contractors Ltd', logoUrl: '/images/clients/snowpeak.jpg' },
+        { name: 'Criserve Engineering Ltd', logoUrl: '/images/clients/criserve.jpg' },
     ];
 
     for (const client of clients) {
         await prisma.client.upsert({
             where: { name: client.name },
-            update: {},
+            update: client,
             create: client,
         });
     }
@@ -311,14 +311,71 @@ async function main() {
         if (serviceId) {
             await prisma.project.upsert({
                 where: { slug: project.slug },
-                update: { ...project, serviceId },
-                create: { ...project, serviceId },
+                update: {
+                    ...project,
+                    serviceId,
+                    imageUrl: '/images/Picture4.png',
+                },
+                create: {
+                    ...project,
+                    serviceId,
+                    imageUrl: '/images/Picture4.png',
+                },
             });
         }
     }
     console.log(`✅ ${projectsWithServices.length} projects created`);
 
     console.log('🎉 Seeding completed!');
+    const testimonials = [
+        {
+            id: 'seed-testimonial-air-design',
+            name: 'Operations Team',
+            company: 'Air Design Ltd',
+            position: 'Project Partner',
+            content: 'Ohmitex consistently delivers dependable control panels and automation support. Their team is responsive, practical, and strong during commissioning.',
+            rating: 5,
+            approved: true,
+            featured: true,
+        },
+        {
+            id: 'seed-testimonial-sarit',
+            name: 'Facility Management',
+            company: 'Sarit Center',
+            position: 'Building Operations',
+            content: 'Their BMS support and control integration work helped us improve monitoring, efficiency, and operational visibility across critical systems.',
+            rating: 5,
+            approved: true,
+            featured: true,
+        },
+        {
+            id: 'seed-testimonial-plumbing-systems',
+            name: 'Engineering Team',
+            company: 'Plumbing System Ltd',
+            position: 'Project Delivery',
+            content: 'We value their structured approach, technical depth, and the quality of their automation panels. They are a reliable implementation partner.',
+            rating: 5,
+            approved: true,
+            featured: false,
+        },
+    ];
+
+    for (const testimonial of testimonials) {
+        await prisma.testimonial.upsert({
+            where: { id: testimonial.id },
+            update: {
+                name: testimonial.name,
+                company: testimonial.company,
+                position: testimonial.position,
+                content: testimonial.content,
+                rating: testimonial.rating,
+                approved: testimonial.approved,
+                featured: testimonial.featured,
+            },
+            create: testimonial,
+        });
+    }
+    console.log(`Added ${testimonials.length} testimonials`);
 }
 
 main()
