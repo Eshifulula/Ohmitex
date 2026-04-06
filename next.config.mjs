@@ -35,7 +35,7 @@ const nextConfig = {
                 hostname: 'ohmitexcontrols.co.ke',
                 pathname: '/**',
             },
-            // Allow any S3 / R2 / external storage hostname via env
+            // Allow any S3 / R2 / Cloudinary external storage hostname
             {
                 protocol: 'https',
                 hostname: '**',
@@ -44,38 +44,76 @@ const nextConfig = {
         ],
     },
     async headers() {
+        // ---------------------------------------------------------------------------
+        // Shared security headers (applied to ALL routes)
+        // ---------------------------------------------------------------------------
+        const sharedSecurityHeaders = [
+            { key: 'X-Frame-Options', value: 'DENY' },
+            { key: 'X-Content-Type-Options', value: 'nosniff' },
+            { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+            { key: 'X-XSS-Protection', value: '1; mode=block' },
+            {
+                key: 'Permissions-Policy',
+                value: 'camera=(), microphone=(), geolocation=(), payment=()',
+            },
+            {
+                key: 'Strict-Transport-Security',
+                value: 'max-age=63072000; includeSubDomains; preload',
+            },
+            // Cross-Origin policies
+            { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+            { key: 'Cross-Origin-Resource-Policy', value: 'same-site' },
+        ];
+
+        // ---------------------------------------------------------------------------
+        // Public CSP — no unsafe-eval; tighter than admin
+        // ---------------------------------------------------------------------------
+        const publicCSP = [
+            "default-src 'self'",
+            // No unsafe-eval on public pages
+            "script-src 'self' 'unsafe-inline'",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "img-src 'self' data: blob: http://localhost:9000 https: https://res.cloudinary.com",
+            "font-src 'self' data: https://fonts.gstatic.com",
+            "connect-src 'self' http://localhost:9000 https:",
+            "frame-src 'self' https://www.youtube.com https://youtube.com",
+            "frame-ancestors 'none'",
+            "base-uri 'self'",
+            "form-action 'self'",
+            "upgrade-insecure-requests",
+        ].join('; ');
+
+        // ---------------------------------------------------------------------------
+        // Admin CSP — allows unsafe-eval needed by Tiptap editor
+        // ---------------------------------------------------------------------------
+        const adminCSP = [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "img-src 'self' data: blob: http://localhost:9000 https: https://res.cloudinary.com",
+            "font-src 'self' data: https://fonts.gstatic.com",
+            "connect-src 'self' http://localhost:9000 https:",
+            "frame-src 'self' https://www.youtube.com https://youtube.com",
+            "frame-ancestors 'none'",
+            "base-uri 'self'",
+            "form-action 'self'",
+        ].join('; ');
+
         return [
+            // Admin routes — permissive CSP for Tiptap
+            {
+                source: '/admin/:path*',
+                headers: [
+                    ...sharedSecurityHeaders,
+                    { key: 'Content-Security-Policy', value: adminCSP },
+                ],
+            },
+            // All other routes — strict public CSP
             {
                 source: '/:path*',
                 headers: [
-                    {
-                        key: 'X-Frame-Options',
-                        value: 'DENY',
-                    },
-                    {
-                        key: 'X-Content-Type-Options',
-                        value: 'nosniff',
-                    },
-                    {
-                        key: 'Referrer-Policy',
-                        value: 'strict-origin-when-cross-origin',
-                    },
-                    {
-                        key: 'X-XSS-Protection',
-                        value: '1; mode=block',
-                    },
-                    {
-                        key: 'Permissions-Policy',
-                        value: 'camera=(), microphone=(), geolocation=()',
-                    },
-                    {
-                        key: 'Strict-Transport-Security',
-                        value: 'max-age=31536000; includeSubDomains',
-                    },
-                    {
-                        key: 'Content-Security-Policy',
-                        value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: http://localhost:9000 https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' http://localhost:9000 https:; frame-src 'self' https://www.youtube.com https://youtube.com; frame-ancestors 'none';",
-                    },
+                    ...sharedSecurityHeaders,
+                    { key: 'Content-Security-Policy', value: publicCSP },
                 ],
             },
         ];

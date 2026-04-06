@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Shield } from "lucide-react";
 
 export function Footer() {
     return (
@@ -116,8 +116,31 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-                    <p>&copy; {new Date().getFullYear()} Ohmitex Smart Controls Ltd. All rights reserved.</p>
+                {/* Bottom bar */}
+                <div className="mt-8 border-t pt-8">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p className="text-sm text-muted-foreground text-center sm:text-left">
+                            &copy; {new Date().getFullYear()} Ohmitex Smart Controls Ltd. All rights reserved.
+                        </p>
+
+                        {/* Legal links */}
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <Shield className="h-3.5 w-3.5 text-accent mr-1" />
+                            <Link
+                                href="/privacy-policy"
+                                className="hover:text-accent transition-colors underline-offset-2 hover:underline"
+                            >
+                                Privacy Policy
+                            </Link>
+                            <span className="mx-2 text-border">·</span>
+                            <Link
+                                href="/terms-of-use"
+                                className="hover:text-accent transition-colors underline-offset-2 hover:underline"
+                            >
+                                Terms of Use
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>

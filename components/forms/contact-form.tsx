@@ -41,6 +41,8 @@ export function ContactForm() {
             phone: formData.get("phone"),
             company: formData.get("company"),
             message: formData.get("message"),
+            // Honeypot — must be empty; bots will auto-fill this, humans won't see it
+            website: formData.get("website"),
         };
 
         try {
@@ -101,6 +103,12 @@ export function ContactForm() {
                     <div className="space-y-2">
                         <Label htmlFor="message">Message *</Label>
                         <Textarea id="message" name="message" required rows={5} disabled={loading} />
+                    </div>
+
+                    {/* Honeypot — visually hidden; bots fill it, humans don't see it */}
+                    <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
+                        <label htmlFor="website">Website (leave blank)</label>
+                        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
                     </div>
 
                     {success && (

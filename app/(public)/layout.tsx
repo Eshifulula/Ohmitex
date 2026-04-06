@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppWidget } from "@/components/whatsapp-widget";
+import { CookieConsent } from "@/components/cookie-consent";
 
 export default function PublicLayout({
     children,
@@ -13,6 +14,7 @@ export default function PublicLayout({
             <main className="flex-1">{children}</main>
             <Footer />
             <WhatsAppWidget />
+            <CookieConsent />
         </div>
     );
 }
