@@ -11,7 +11,7 @@ import { ProjectsGrid } from "@/components/sections/projects-grid";
 import { ClientsGrid } from "@/components/sections/clients-grid";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { CTASection } from "@/components/sections/cta-section";
-import { OrganizationSchema, LocalBusinessSchema } from "@/components/seo/schema";
+import { OrganizationSchema, LocalBusinessSchema, WebSiteSchema } from "@/components/seo/schema";
 
 export default async function HomePage() {
     const services = await prisma.service.findMany({
@@ -31,6 +31,7 @@ export default async function HomePage() {
         <>
             <OrganizationSchema />
             <LocalBusinessSchema />
+            <WebSiteSchema />
 
             <Hero />
             <AboutSection />

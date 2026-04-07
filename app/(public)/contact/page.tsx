@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/forms/contact-form";
 import { PageHero } from "@/components/sections/page-hero";
+import { ContactPageSchema } from "@/components/seo/schema";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "Contact Us",
     description:
-        "Get in touch with Ohmitex Smart Controls Ltd. Call +254 725 753 008 or email info@ohmitexscontrols.co.ke. We're available Mon–Fri 8AM–6PM in Nairobi, Kenya for all automation enquiries.",
+        "Get in touch with Ohmitex Smart Controls Ltd. Call +254 725 753 008 or email info@ohmitexcontrols.co.ke. We're available Mon–Fri 8AM–6PM in Nairobi, Kenya for all automation enquiries.",
+    alternates: {
+        canonical: "https://ohmitexcontrols.co.ke/contact",
+    },
     openGraph: {
         title: "Contact Ohmitex Smart Controls Ltd | Nairobi, Kenya",
         description:
@@ -14,10 +18,10 @@ export const metadata: Metadata = {
     },
 };
 
-
 export default function ContactPage() {
     return (
         <>
+            <ContactPageSchema />
             <PageHero
                 title="Contact Us"
                 subtitle="Get in touch with our team for any inquiries or project discussions"
@@ -47,7 +51,7 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <h3 className="font-medium">Email</h3>
-                                        <p className="text-muted-foreground">info@ohmitexscontrols.co.ke</p>
+                                        <p className="text-muted-foreground">info@ohmitexcontrols.co.ke</p>
                                     </div>
                                 </div>
 
@@ -76,7 +80,7 @@ export default function ContactPage() {
                                 <h3 className="mb-4 font-medium">Business Hours</h3>
                                 <div className="space-y-2 text-sm text-muted-foreground">
                                     <p>Mon - Fri: 8:00 AM – 6:00 PM</p>
-                                    <p>Saturday & Sunday: Closed</p>
+                                    <p>Saturday &amp; Sunday: Closed</p>
                                 </div>
                             </div>
                         </div>

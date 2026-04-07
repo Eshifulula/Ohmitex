@@ -210,6 +210,78 @@ Kenya ODPC: www.odpc.go.ke`,
     },
 ];
 
+// ─── Rich content renderer ───────────────────────────────────────────────────
+// Parses the plain-text content strings into styled JSX:
+//   **text**     → bold sub-heading (e.g. "**Information You Provide**")
+//   • item       → styled bullet list
+//   blank line   → paragraph break
+function renderContent(content: string) {
+    const blocks = content.split('\n\n');
+
+    return blocks.map((block, i) => {
+        const lines = block.split('\n');
+
+        // Check if all non-empty lines in this block are bullets
+        const bulletLines = lines.filter(l => l.trim().startsWith('•'));
+        const nonBulletLines = lines.filter(l => l.trim() && !l.trim().startsWith('•'));
+
+        if (bulletLines.length > 0 && nonBulletLines.length === 0) {
+            // Pure bullet block
+            return (
+                <ul key={i} className="mt-2 space-y-1.5">
+                    {bulletLines.map((line, j) => (
+                        <li key={j} className="flex items-start gap-2.5">
+                            <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent flex-shrink-0" />
+                            <span>{line.replace(/^[•\s]+/, '').trim()}</span>
+                        </li>
+                    ))}
+                </ul>
+            );
+        }
+
+        // Mixed block — process line by line
+        return (
+            <div key={i} className="space-y-1.5">
+                {lines.map((line, j) => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return null;
+
+                    // **Sub-heading** — a line that is entirely bold
+                    if (/^\*\*[^*]+\*\*$/.test(trimmed)) {
+                        return (
+                            <p key={j} className="font-semibold text-foreground pt-2 first:pt-0">
+                                {trimmed.replace(/\*\*/g, '')}
+                            </p>
+                        );
+                    }
+
+                    // Bullet line
+                    if (trimmed.startsWith('•')) {
+                        return (
+                            <div key={j} className="flex items-start gap-2.5">
+                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent flex-shrink-0" />
+                                <span>{trimmed.replace(/^[•\s]+/, '').trim()}</span>
+                            </div>
+                        );
+                    }
+
+                    // Regular paragraph — inline **bold** within text
+                    const parts = trimmed.split(/(\*\*[^*]+\*\*)/);
+                    return (
+                        <p key={j}>
+                            {parts.map((part, k) =>
+                                /^\*\*[^*]+\*\*$/.test(part)
+                                    ? <strong key={k} className="font-semibold text-foreground">{part.replace(/\*\*/g, '')}</strong>
+                                    : part
+                            )}
+                        </p>
+                    );
+                })}
+            </div>
+        );
+    });
+}
+
 export default function PrivacyPolicyPage() {
     return (
         <>
@@ -293,10 +365,8 @@ export default function PrivacyPolicyPage() {
                                             </div>
                                             <h2 className="text-lg font-bold text-foreground">{section.title}</h2>
                                         </div>
-                                        <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line space-y-3">
-                                            {section.content.split('\n\n').map((paragraph, j) => (
-                                                <p key={j}>{paragraph}</p>
-                                            ))}
+                                        <div className="text-sm text-muted-foreground leading-relaxed space-y-2">
+                                            {renderContent(section.content)}
                                         </div>
                                     </div>
                                 );

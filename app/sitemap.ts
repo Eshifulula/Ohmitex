@@ -44,6 +44,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: 'monthly',
             priority: 0.7,
         },
+        {
+            url: `${baseUrl}/blog`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        // Legal pages — rarely change, low SEO priority
+        {
+            url: `${baseUrl}/privacy-policy`,
+            lastModified: new Date('2026-01-01'),
+            changeFrequency: 'yearly',
+            priority: 0.3,
+        },
+        {
+            url: `${baseUrl}/terms-of-use`,
+            lastModified: new Date('2026-01-01'),
+            changeFrequency: 'yearly',
+            priority: 0.3,
+        },
+        {
+            url: `${baseUrl}/licenses`,
+            lastModified: new Date('2026-01-01'),
+            changeFrequency: 'yearly',
+            priority: 0.2,
+        },
     ]
 
     // Dynamic service pages
@@ -68,6 +93,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
     }))
 
-    return [...staticPages, ...servicePages, ...projectPages]
+    // Dynamic blog post pages
+    const blogPosts = await prisma.blogPost.findMany({
+        where: { published: true },
+        select: { slug: true, updatedAt: true },
+    })
+    const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+        url: `${baseUrl}/blog/${post.slug}`,
+        lastModified: post.updatedAt,
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
+    }))
+
+    return [...staticPages, ...servicePages, ...projectPages, ...blogPages]
 }
 

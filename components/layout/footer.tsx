@@ -139,6 +139,13 @@ export function Footer() {
                             >
                                 Terms of Use
                             </Link>
+                            <span className="mx-2 text-border">·</span>
+                            <Link
+                                href="/licenses"
+                                className="hover:text-accent transition-colors underline-offset-2 hover:underline"
+                            >
+                                Open Source Licences
+                            </Link>
                         </div>
                     </div>
                 </div>
